@@ -1,0 +1,29 @@
+import bpy
+
+prevTime = 0
+
+###
+# Rotates the object with the rotSpeed value in radians/s
+###
+def rotate(rotSpeed, curRot):
+    scn = bpy.context.scene
+    curFrame = scn.frame_current
+    fps = scn.render.fps
+    
+    # Calculate total playtime
+    time = curFrame / fps
+
+    # Get delta time
+    dt = prevTime - time
+
+    # This will set the current rotation value of the object!!
+    newRot = curRot + rotSpeed * dt
+    
+    # Set new previous time
+    prevTime = time
+    
+    return newRot
+
+
+# Add to driver namaespece to make it accessable     
+bpy.app.driver_namespace['RotWithSpeed'] = rotate
